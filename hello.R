@@ -1,12 +1,37 @@
 ## This is a practice script to learn git! 
-##First Project
-#Import data;
-data<-read.csv("C:/Users/lbabu/Desktop/linelist_raw.csv",header =TRUE )
+##Authors : Xing, Jostein, Babu
 
-#Data analysis
-#Data visualization
+## First project: This is a function to cache a inverse of a matrix;
+makeCacheMatrix <- function(n = matrix()) {
+  p <- NULL
+  set <- function(r) {
+    n <<- r
+    p <<- NULL
+  }
+  get <- function() n
+  setinverse <- function(inverse) n <<- inverse
+  getinverse <- function() p
+  list(set = set,
+       +        get = get,
+       +        setinverse = setinverse,
+       +        getinverse = getinverse)
+}
+> cacheSolve <- function(n, ...) {
+  p <- n$getinverse()
+  if (!is.null(p)) {
+    message("getting cached data")
+    return(p)
+  }
+  data <- n$get()
+  p <- solve(data, ...)
+  n$setinverse(p)
+  p
+}
 
-# Xing makes change on June 17
+## Testing the function;
 
-# Xing makes new changes on new branch
-# now next time we gonna work on data visualization!
+M <- matrix(c(5,9,-6,12),2,2)
+#
+K <- makeCacheMatrix(M)
+
+cacheSolve(K)
